@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-노래맞추기게임 메인화면123
+<h3 th:if="${session.loginNickname != null}"
+    th:text="|${session.loginNickname}님 로그인중...|">
+</h3>
+
+<h3 th:if="${session.loginNickname == null}">
+    로그인이 필요합니다.
+</h3>
+
+<div th:if="${session.loginNickname != null}">
+    <form action="/music/game/mode" method="post">
+        <button>모드선택</button>
+    </form>
+    <form action="/music/logout" method="post">
+        <button>로그아웃</button>
+    </form>
+</div>
+
+<div th:if="${session.loginNickname == null}">
+    <a href="/music/login">로그인</a> <br>
+    <a href="/music/join">회원가입</a>
+</div>
 </body>
 </html>
