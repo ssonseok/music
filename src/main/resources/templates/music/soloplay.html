@@ -38,6 +38,7 @@
 <script th:inline="javascript">
     const roomId = [[${roomId}]];
     const userId = [[${userId}]];
+    const nickname = [[${nickname}]];
     let score = 0;
     let started = false;
 
@@ -84,7 +85,7 @@
             if (correct) {
                 score++;
                 document.getElementById('score').textContent = score;
-                msg.textContent = '정답 : ' + value;
+                msg.textContent = nickname + ' : ' + value;
                 msg.style.color = 'green';
 
                 // 다음 노래
@@ -106,8 +107,8 @@
                             });
                     });
             } else {
-                msg.textContent = '오답 : ' + value;
-                msg.style.color = 'red';
+                msg.textContent = nickname + ' : ' + value;
+                msg.style.color = 'black';
             }
 
             chatBox.appendChild(msg);
