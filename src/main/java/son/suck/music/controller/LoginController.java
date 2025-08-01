@@ -39,16 +39,19 @@ public class LoginController {
     }
     @PostMapping("/login")
     public String login(UserDTO userDTO, Model model, HttpSession httpSession){
-        Optional<User> result=loginService.login(userDTO);
+        Optional<User> result = loginService.login(userDTO);
         if(result.isPresent()) {
-            httpSession.setAttribute("loginNickname",result.get().getNickname());
+            User user = result.get();
+            System.out.println("로그인 성공, 세션에 저장 User: " + user);
+            httpSession.setAttribute("loginUser", user);
             return "redirect:/music/main";
-        }
-        else{
-            model.addAttribute("error","로그인 실패!");
+        } else {
+            model.addAttribute("error", "로그인 실패!");
             return "/music/login";
         }
     }
+
+
     @PostMapping("/logout")
     public String logout(HttpSession httpSession){
         httpSession.invalidate();

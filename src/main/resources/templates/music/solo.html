@@ -6,5 +6,82 @@
 </head>
 <body>
 솔로모드페이지
+장르,난이도,년도설정,시작버튼
+<form id="startForm">
+    <label>장르:
+        <select name="genre" id="genre">
+            <option value="댄스">댄스</option>
+            <option value="발라드">발라드</option>
+        </select>
+    </label>
+    <br>
+    <label>난이도:
+        <select name="difficulty" id="difficulty">
+            <option value="easy">쉬움</option>
+            <option value="nomal">보통</option>
+            <option value="hard">어려움</option>
+        </select>
+    </label>
+    <br>
+    <label>년도 범위
+        <input type="number" name="fromYear" id="fromYear">
+        <input type="number" name="toYear" id="toYear">
+    </label>
+    <br><br>
+    <button>게임시작</button>
+</form>
+
+<script>
+    document.getElementById("startForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const genre = document.getElementById("genre").value;
+        const difficulty = document.getElementById("difficulty").value;
+        const fromYear = parseInt(document.getElementById("fromYear").value) || 0;
+        const toYear = parseInt(document.getElementById("toYear").value) || 9999;
+
+        // userDTO는 이제 보내지 않음. 세션에서 서버가 알아서 처리함
+
+        const payload = {
+            genre,
+            difficulty,
+            fromYear,
+            toYear
+        };
+
+        fetch('/api/music/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            if (response.status === 401) {
+                alert('로그인이 필요합니다.');
+                window.location.href = '/music/login';
+                throw new Error('Unauthorized');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("게임 시작 성공:", data);
+            if(data.gameRoom && data.gameRoom.grno) {
+                window.location.href = `/music/soloplay?roomId=${data.gameRoom.grno}` +
+                                       `&genre=${encodeURIComponent(genre)}` +
+                                       `&difficulty=${encodeURIComponent(difficulty)}` +
+                                       `&fromYear=${fromYear}` +
+                                       `&toYear=${toYear}`;
+            } else {
+                alert('게임방 생성 실패');
+            }
+        })
+        .catch(err => {
+            if(err.message !== 'Unauthorized') {
+                console.error('게임 시작 중 오류:', err);
+                alert('게임 시작 중 오류가 발생했습니다.');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

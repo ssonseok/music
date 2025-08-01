@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>게임 플레이</title>
+</head>
+<body>
+<p th:text="${nickname} + '님의 방'"></p>
+<button id="startBtn">게임 시작</button>
+<br>
+10개의 노래가 재생됩니다. 노래가 10초이상 나오지 않는다면 '스킵' 입력해주세요 <br>
+
+
+<hr />
+
+<div>
+    <strong>맞춘 개수:</strong> <span id="score">0</span>
+</div>
+
+<hr />
+
+<!-- 유튜브 영상 출력 -->
+<iframe id="music-frame"
+        style="position: absolute; top: -9999px; left: -9999px;"
+        frameborder="0" allow="autoplay" allowfullscreen></iframe>
+
+<hr />
+
+<!-- 채팅창 -->
+<div id="chat-box" style="height:200px; overflow-y:auto; border:1px solid #ccc;"></div>
+
+<!-- 정답 입력창 -->
+<div id="input-box">
+    <input type="text" id="answer" placeholder="정답을 입력하세요" />
+    <button onclick="submitAnswer()">입력</button>
+</div>
+
+<script th:inline="javascript">
+    const roomId = [[${roomId}]];
+    const userId = [[${userId}]];
+    let score = 0;
+    let started = false;
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+        if (started) return;
+        started = true;
+
+        fetch(`/api/music/${roomId}/${userId}/music`)
+            .then(res => {
+                if (!res.ok) throw new Error('음악 없음');
+                return res.json();
+            })
+            .then(music => {
+                const iframe = document.getElementById('music-frame');
+                iframe.src = `https://www.youtube.com/embed/${music.youtube_id}?autoplay=1&mute=0`;
+                iframe.style.opacity = 1;
+                document.getElementById('startBtn').style.display = 'none';
+            })
+            .catch(() => {
+                fetch(`/api/music/${roomId}/${userId}/result`)
+                    .then(res => res.json())
+                    .then(result => {
+                        alert(`게임 종료\n1등: ${result.userDTO.nickname} (${score})`);
+                        window.location.href = "/music"; // 종료 후 메인으로 이동
+                    });
+            });
+    });
+
+    function submitAnswer() {
+        const input = document.getElementById('answer');
+        const value = input.value.trim();
+        if (!value || !started) return;
+
+        fetch(`/api/music/${roomId}/${userId}/check`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ input: value })
+        })
+        .then(res => res.json())
+        .then(correct => {
+            const chatBox = document.getElementById('chat-box');
+            const msg = document.createElement('div');
+
+            if (correct) {
+                score++;
+                document.getElementById('score').textContent = score;
+                msg.textContent = '정답 : ' + value;
+                msg.style.color = 'green';
+
+                // 다음 노래
+                fetch(`/api/music/${roomId}/${userId}/music`)
+                    .then(res => {
+                        if (!res.ok) throw new Error('노래 없음');
+                        return res.json();
+                    })
+                    .then(next => {
+                        const iframe = document.getElementById('music-frame');
+                        iframe.src = `https://www.youtube.com/embed/${next.youtube_id}?autoplay=1&mute=0`;
+                    })
+                    .catch(() => {
+                        fetch(`/api/music/${roomId}/${userId}/result`)
+                            .then(res => res.json())
+                            .then(result => {
+                                alert(`게임 종료\n1등: ${result.userDTO.nickname} (${score})`);
+                                window.location.href = "/music/main";
+                            });
+                    });
+            } else {
+                msg.textContent = '오답 : ' + value;
+                msg.style.color = 'red';
+            }
+
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            input.value = '';
+            input.focus();
+        });
+    }
+
+    document.getElementById('answer').addEventListener('keydown', e => {
+        if (e.key === 'Enter') submitAnswer();
+    });
+</script>
+
+
+
+</body>
+</html>

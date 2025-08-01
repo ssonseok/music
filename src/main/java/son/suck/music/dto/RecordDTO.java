@@ -15,4 +15,5 @@ public class RecordDTO {
     private GameRoomDTO gameRoomDTO;
     private MusicDTO musicDTO;
     private UserDTO userDTO;
+    private int score;
 }
