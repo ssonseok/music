@@ -2,18 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>회원가입</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+            color: #00eaff;
+            font-family: 'Orbitron', sans-serif; /* 구글폰트 Orbitron 추천 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(10, 10, 20, 0.9);
+            border: 2px solid #00eaff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00eaff;
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #00eaff;
+            background: black;
+            color: #00eaff;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #1a1a2e;
+            border: 2px solid #ffcc00;
+            color: #ffcc00;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px #ffcc00;
+        }
+
+        button:hover {
+            background: #ffcc00;
+            color: black;
+        }
+
+        a {
+            color: #00eaff;
+            text-decoration: none;
+        }
+    </style>
+    <!-- 구글폰트 Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<form action="/music/join" method="post">
-  ID: <input name="id" required>
-  PW: <input type="password" name="pw" required>
-  닉네임: <input name="nickname" required>
-  <button>회원가입</button>
-</form>
+<div class="container">
+    <h1>회원가입</h1>
+    <form action="/music/join" method="post">
+        <input name="id" placeholder="ID" required>
+        <input type="password" name="pw" placeholder="PW" required>
+        <input name="nickname" placeholder="닉네임" required>
+        <button>회원가입</button>
+    </form>
 
-<p>[[${error}]]</p>
-<a href="/music/login">로그인</a>
-
+<!--    <p style="color:red">[[${error}]]</p>-->
+    <a href="/music/login">로그인</a>
+</div>
 </body>
 </html>

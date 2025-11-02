@@ -2,11 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>모드 선택</title>
+    <!-- 구글폰트 Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+            color: #00eaff;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: url('cursor.png'), auto; /* 커스텀 커서 */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        button {
+            background: #1a1a2e;
+            border: 2px solid #ffcc00;
+            color: #ffcc00;
+            padding: 20px 40px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 10px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px #ffcc00;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: #ffcc00;
+            color: black;
+            box-shadow: 0 0 25px #ffcc00;
+        }
+    </style>
 </head>
 <body>
-<form action="/music/solo">
-    <button>솔로모드</button>
-</form>
+<div class="container">
+    <form action="/music/solo">
+        <button>솔로모드</button>
+    </form>
+</div>
 </body>
 </html>

@@ -16,4 +16,5 @@ public interface GameService {
     RecordDTO getResult(int roomId, int userId);//최종결과
     void skip(int roomId, int userId);//노래 스킵
     boolean checkAnswer(Integer roomId, Integer userId, String input);//정답제출(정답 true)
+
 }

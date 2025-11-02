@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface LoginService {
     boolean join(UserDTO userDTO);
     Optional<User> login(UserDTO userDTO);
-
+    //Optional<UserDTO>로 수정하기
 }

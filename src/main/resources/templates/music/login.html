@@ -2,16 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>로그인</title>
+    <!-- 구글폰트 Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 전체 배경과 폰트 */
+        body {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+            color: #00eaff;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: url('cursor.png'), auto; /* 커스텀 커서 */
+        }
+
+        .container {
+            background: rgba(10, 10, 20, 0.9);
+            border: 2px solid #00eaff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00eaff;
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #00eaff;
+            background: black;
+            color: #00eaff;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #1a1a2e;
+            border: 2px solid #ffcc00;
+            color: #ffcc00;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px #ffcc00;
+        }
+
+        button:hover {
+            background: #ffcc00;
+            color: black;
+        }
+
+        a {
+            color: #00eaff;
+            text-decoration: none;
+        }
+
+        /* 에러 메시지 */
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<form action="/music/login" method="post">
-    ID: <input name="id" required>
-    PW: <input type="password" name="pw" required>
-    <button>로그인</button>
-</form>
+<div class="container">
+    <h1>로그인</h1>
+    <form action="/music/login" method="post">
+        <input name="id" placeholder="ID" required>
+        <input type="password" name="pw" placeholder="PW" required>
+        <button>로그인</button>
+    </form>
 
-<p>[[${error}]]</p>
-<a href="/music/join">회원가입</a>
+    <!-- 에러 메시지 -->
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <a href="/music/join">회원가입</a>
+</div>
 </body>
 </html>

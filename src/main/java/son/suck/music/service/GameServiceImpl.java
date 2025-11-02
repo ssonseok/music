@@ -117,7 +117,6 @@ public class GameServiceImpl implements GameService {
         RecordDTO recordDTO=modelMapper.map(record,RecordDTO.class);
 
         return recordDTO;
-
     }
 
     @Override
@@ -150,6 +149,5 @@ public class GameServiceImpl implements GameService {
         }
         return false;
     }
-
 
 }

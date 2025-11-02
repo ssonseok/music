@@ -2,11 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>솔로모드 설정</title>
+    <!-- 구글폰트 Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+            color: #00eaff;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: url('cursor.png'), auto;
+        }
+
+        h1 {
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background: rgba(10,10,20,0.9);
+            border: 2px solid #00eaff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00eaff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 400px;
+            align-items: flex-start;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            color: #00eaff;
+        }
+
+        select, input[type="number"] {
+            background: black;
+            border: 2px solid #00eaff;
+            color: #00eaff;
+            border-radius: 5px;
+            padding: 5px;
+            width: 120px;
+        }
+
+        button {
+            background: #1a1a2e;
+            border: 2px solid #ffcc00;
+            color: #ffcc00;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px #ffcc00;
+            align-self: center;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: #ffcc00;
+            color: black;
+            box-shadow: 0 0 20px #ffcc00;
+        }
+    </style>
 </head>
 <body>
-솔로모드페이지
-장르,난이도,년도설정,시작버튼
 <form id="startForm">
     <label>장르:
         <select name="genre" id="genre">

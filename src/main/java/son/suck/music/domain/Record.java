@@ -28,7 +28,7 @@ public class Record {
     @ManyToOne
     @JoinColumn(name = "music_mno")
     Music music;
-
+ 
     public void skip(){
         this.correct=false;
     }
